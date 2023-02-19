@@ -1,0 +1,47 @@
+version: '3.3'
+
+services:
+
+  #service 1: definition of mysql DB
+  db:
+    image: mysql:latest
+    container_name: mysql-db
+    environment:
+      - MYSQL_USER=sa
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=db_loan
+      - MYSQL_PASSWORD=password
+    restart: always
+    ports:
+      - "3307:3306"
+
+  #service 2: definition of phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: my-php-myadmin
+    ports:
+      - "8082:80"
+    restart: always
+
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: password
+
+  #service 3: definition of spring-boot app
+  app:                        #it is just a name, which will be used only in this file.
+    image: java-app               #name of the image after dockerfile executes
+    container_name: java-app  #name of the container created from docker image
+    build:
+      context: .                          #docker file path (. means root directory)
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_loan?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: password
