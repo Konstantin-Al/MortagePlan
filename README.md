@@ -29,3 +29,8 @@ make a new calculation
 
 AWS 
 http://13.51.146.191:8084/
+
+phpMyAdmin
+http://13.51.146.191:8082/
+sa
+password
