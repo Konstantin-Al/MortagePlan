@@ -32,7 +32,7 @@ public class ReadService {
        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
        // create an ArrayList of String Array type
-       ArrayList<String[]> listOfLines = new ArrayList<String[]>();
+       ArrayList<String[]> listOfLines = new ArrayList<>();
 
 
        String line = bufferedReader.readLine();

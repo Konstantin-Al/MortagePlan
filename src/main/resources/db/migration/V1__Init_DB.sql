@@ -20,6 +20,7 @@ create table IF NOT EXISTS loan_cal (
                         interest varchar(255),
                         years smallint,
 
+
                         primary key (id)
 );
 

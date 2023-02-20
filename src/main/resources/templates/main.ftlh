@@ -88,14 +88,14 @@
                 <td>
                     <b>${loanCal.totalLoan}</b>
                 </td>
-                <td style="text-align: left; padding-left: 10px">
+                <td style="text-align: center; padding-left: 10px">
                     <b>${loanCal.interest}</b>
                 </td>
-                <td style="text-align: left; padding-left: 10px">
+                <td style="text-align:center; padding-left: 10px">
                     <b>${loanCal.years}</b>
                 </td>
                 <td style="text-align: left; padding-left: 10px">
-                    <b>${loanCal.years}</b>
+                    <b>${loanCal.calMortgage}</b>
                 </td>
             </tr>
         </#list>

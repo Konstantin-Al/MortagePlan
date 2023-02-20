@@ -1,22 +1,22 @@
 package ax.k.controller;
 import ax.k.domain.Customer;
-import ax.k.repos.LoanCalRepo;
 import ax.k.service.MainService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
 
 
-@org.springframework.stereotype.Controller
+
+@Controller
 public class MainController {
 
     Logger logger = LoggerFactory.getLogger(MainController.class);
@@ -56,15 +56,13 @@ public class MainController {
                     ){
         logger.info("getMapping action=calculate");
 
-        int myYears = 2; // TODO
-
-        mainService.calBtnClicked(customer, total_loan, interest, myYears);
+        mainService.calBtnClicked(customer, total_loan, interest, years);
 
         return "redirect:/";
     }
 
     @PostMapping (params = "action=import")
-    public String importCSV(@RequestParam MultipartFile importedFile) throws IOException {
+    public String importCSV(@RequestParam MultipartFile importedFile) {
         logger.info("getMapping action=import");
         logger.info("File name: " + importedFile.getOriginalFilename());
         logger.info("File size: " + importedFile.getSize());

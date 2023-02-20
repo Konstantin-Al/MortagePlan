@@ -1,7 +1,6 @@
 package ax.k.domain;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -21,17 +20,20 @@ public class LoanCal {
     private String totalLoan;
     private String interest;
     private int years;
+    private String cal_mortgage;
+
 
 // ---------------------------------------------  constructors
     public LoanCal() {                                        // needs for entity creation
     }
 
-    public LoanCal(LocalDateTime CD, Customer customer, String totalLoan, String interest, int years) {
+    public LoanCal(LocalDateTime CD, Customer customer, String totalLoan, String interest, int years, String cal_mortgage) {
         this.CD = CD;
         this.customer = customer;
         this.totalLoan = totalLoan;
         this.interest = interest;
         this.years = years;
+        this.cal_mortgage = cal_mortgage;
     }
 
 // --------------------------                   Getters and Setters
@@ -80,6 +82,11 @@ public class LoanCal {
         return years;
     }
 
-
+    public void setCalMortgage(String cal_mortgage) {
+        this.cal_mortgage = cal_mortgage;
+    }
+    public String getCalMortgage() {
+        return cal_mortgage;
+    }
 
 }
