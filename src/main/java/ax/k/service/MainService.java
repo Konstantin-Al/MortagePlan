@@ -8,6 +8,7 @@ import ax.k.repos.LoanCalRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 @Service
@@ -53,7 +55,15 @@ public class MainService  {
 
         LoanCal loanCal = new LoanCal(CD, customer, total_loan, interest, years);
         loanCalRepo.save(loanCal);
+    }
 
+    public List<LoanCal> mainLoadAllLoanCal(){
+        return loanCalRepo
+                .findAll(Sort.by(Sort.Direction.DESC, "CD")
+                        .and(Sort.by(Sort.Direction.ASC, "customer")));
+    }
+    public List<LoanCal> mainLoadLoanCalByCustomer(Customer customer){
+        return loanCalRepo.findLoanCalByCustomerOrderByCDDesc(customer);
     }
 
 }

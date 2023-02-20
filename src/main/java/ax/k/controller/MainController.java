@@ -22,8 +22,6 @@ public class MainController {
     Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @Autowired
-    private LoanCalRepo loanCalRepo;
-    @Autowired
     private MainService mainService;
 
     @GetMapping("/login")
@@ -40,14 +38,11 @@ public class MainController {
 
         if (customer.isAdmin())  {
             logger.info("admin");
-
-            model.addAttribute("loanCals", loanCalRepo.findAll(
-                    Sort.by(Sort.Direction.DESC, "CD")
-                            .and(Sort.by(Sort.Direction.ASC, "customer"))));
+            model.addAttribute("loanCals", mainService.mainLoadAllLoanCal());
         }
         else{
             logger.info("user");
-            model.addAttribute("loanCals", loanCalRepo.findLoanCalByCustomerOrderByCDDesc(customer));
+            model.addAttribute("loanCals", mainService.mainLoadLoanCalByCustomer(customer));
         }
 
         return "main";

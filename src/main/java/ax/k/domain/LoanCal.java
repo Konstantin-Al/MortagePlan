@@ -1,7 +1,9 @@
 package ax.k.domain;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity                         // This tells Hibernate to make a table out of this class
 public class LoanCal {
@@ -52,8 +54,9 @@ public class LoanCal {
     public void setCD(LocalDateTime CD) {
         this.CD = CD;
     }
-    public LocalDateTime getCD() {
-        return CD;
+    public String getCD() {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        return CD.format(format);
     }
 
     public void setTotalLoan(String totalLoan) {
