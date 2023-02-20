@@ -21,6 +21,9 @@ public class MainController {
 
     Logger logger = LoggerFactory.getLogger(MainController.class);
 
+    String RESULT_STR = null;
+
+
     @Autowired
     private MainService mainService;
 
@@ -43,6 +46,11 @@ public class MainController {
         else{
             logger.info("user");
             model.addAttribute("loanCals", mainService.mainLoadLoanCalByCustomer(customer));
+
+            if (RESULT_STR != null){
+                model.addAttribute("result_str", RESULT_STR);
+                RESULT_STR = null;
+            }
         }
 
         return "main";
@@ -56,7 +64,25 @@ public class MainController {
                     ){
         logger.info("getMapping action=calculate");
 
-        mainService.calBtnClicked(customer, total_loan, interest, years);
+        boolean isTotal_loanNum = isNum(total_loan);
+        boolean isInterestNum = isNum(interest);
+        boolean isYearsNum = isNum(years);
+
+        if (isTotal_loanNum) {
+            if(isInterestNum) {
+                if (isYearsNum) {
+                    RESULT_STR = mainService.calBtnClicked(customer, total_loan, interest, years);
+                } else {
+                    RESULT_STR = "Years is not numeric";
+                }
+            }
+            else {
+                RESULT_STR = "Interest is not numeric";
+            }
+        }
+        else {
+            RESULT_STR = "Total loan is not numeric";
+        }
 
         return "redirect:/";
     }
@@ -71,4 +97,10 @@ public class MainController {
 
         return "redirect:/";
     }
+
+    private boolean isNum (String str){
+        return str.chars().allMatch( Character::isDigit );
+    }
+
+
 }

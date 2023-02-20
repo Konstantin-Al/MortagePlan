@@ -96,15 +96,22 @@ public class MainService  {
         }
     }
 
-    public void calBtnClicked(Customer customer, String total_loan, String interest, String years){
+    private String prospect (String customerName, String total_loan, String years, String resultMortgage){
+        return ("Prospect: " + customerName + " wants to borrow " + total_loan + " € for a period of " + years + "years and pay " + resultMortgage + " € each month");
+    }
+
+
+    public String calBtnClicked(Customer customer, String total_loan, String interest, String years){
         logger.info("addBtnClicked");
 
         List<String> columns = Arrays.asList("Customer", "Total loan", "Interest", "Years");
 
-        saveOneCalToDB(columns, customer, total_loan, interest, years);
+        String resultMortgage = saveOneCalToDB(columns, customer, total_loan, interest, years);
+
+        return prospect(customer.getUsername(), total_loan, years, resultMortgage );
     }
 
-    private void saveOneCalToDB(List<String> columns, Customer customer, String total_loan, String interest, String years){
+    private String saveOneCalToDB(List<String> columns, Customer customer, String total_loan, String interest, String years){
         logger.info("saveOneCalToDB");
 
 
@@ -118,6 +125,8 @@ public class MainService  {
 
         LoanCal loanCal = new LoanCal(CD, customer, total_loan, interest, yearsInt, resultMortgage);
         loanCalRepo.save(loanCal);
+
+        return resultMortgage;
     }
 
     public List<LoanCal> mainLoadAllLoanCal(){

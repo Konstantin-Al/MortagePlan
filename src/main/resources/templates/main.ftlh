@@ -57,6 +57,9 @@
         </div>
     </div>
 
+    <#if result_str?has_content>
+        <h1>${result_str}</h1>
+    </#if>
 
 
 
